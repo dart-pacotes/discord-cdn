@@ -1,3 +1,5 @@
-abstract class DiscordCDN {
-  Future<Uri> uploadImage(List<int> bytes);
-}
+library discordcdn;
+
+export 'src/models/models.dart';
+export 'src/clients/clients.dart';
+export 'src/discordcdn.dart';
