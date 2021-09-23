@@ -1,0 +1,7 @@
+name: discordcdn
+description: Discord as a CDN!
+version: 0.0.1
+homepage: https://discord-cdn.oshanu.art
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
