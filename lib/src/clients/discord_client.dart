@@ -1,3 +1,5 @@
+import 'package:dartz/dartz.dart';
+
 import '../models/models.dart';
 
 ///
@@ -7,7 +9,7 @@ abstract class DiscordClient {
   ///
   /// Uploads an image to a Discord channel, specified in [channelId] parameter.
   ///
-  Future<Uri> uploadImage({
+  Future<Either<RequestError, Uri>> uploadImage({
     required DiscordUploadableImage image,
     required String channelId,
   });
