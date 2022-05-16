@@ -1,10 +1,16 @@
 name: discordcdn
-description: Discord as a CDN!
+description: Discord as a CDN! Upload images with ease to Discord and serve them in your applications!
 version: 0.0.1
-homepage: https://discord-cdn.oshanu.art
+homepage: https://github.com/dart-pacotes/discord-cdn
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  http:
+  http: ^0.13.4
+  dartz: ^0.10.1
+
+dev_dependencies:
+  lints: ^1.0.1
+  test: ^1.21.1
+  mocktail: ^0.3.0
