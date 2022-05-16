@@ -77,3 +77,6 @@ build/
 # Ignore pubspec.lock
 
 pubspec.lock
+
+# Ignore coverage
+coverage
