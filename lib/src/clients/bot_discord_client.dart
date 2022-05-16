@@ -6,6 +6,10 @@ import 'package:http/http.dart' as http;
 import '../models/models.dart';
 import 'discord_client.dart';
 
+///
+/// A [DiscordClient] implementation that uses the HTTP REST Bot API
+/// to upload images on a channel.
+///
 class BotDiscordClient extends DiscordClient {
   final String token;
 
@@ -48,6 +52,8 @@ class BotDiscordClient extends DiscordClient {
             body['attachments'][0]['url'],
           ),
         );
+      } else if (response.statusCode == 401) {
+        return Left(InvalidBotToken());
       } else if (response.statusCode == 403) {
         return Left(InvalidBotToken());
       } else if (response.statusCode == 404) {
