@@ -3,6 +3,10 @@
 ///
 abstract class RequestError {}
 
+///
+/// Mixin that marks an error as traceable, meaning one can get the reason
+/// and stack trace for the error
+///
 mixin TraceableError {
   String get reason;
 
