@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:dartz/dartz.dart';
+import 'package:http/http.dart' as http;
+
 import '../models/models.dart';
 import 'discord_client.dart';
-import 'package:http/http.dart' as http;
 
 class BotDiscordClient extends DiscordClient {
   final String token;
@@ -15,7 +17,7 @@ class BotDiscordClient extends DiscordClient {
   }) : _httpClient = httpClient;
 
   @override
-  Future<Uri> uploadImage({
+  Future<Either<RequestError, Uri>> uploadImage({
     required DiscordUploadableImage image,
     required String channelId,
   }) async {
@@ -33,18 +35,38 @@ class BotDiscordClient extends DiscordClient {
       ),
     );
 
-    final response = await _httpClient.send(request);
+    try {
+      final response = await _httpClient.send(request);
 
-    if (response.statusCode == 200) {
-      final body = jsonDecode(
-        await response.stream.bytesToString(),
-      );
+      if (response.statusCode == 200) {
+        final body = jsonDecode(
+          await response.stream.bytesToString(),
+        );
 
-      return Uri.parse(
-        body['attachments'][0]['url'],
+        return Right(
+          Uri.parse(
+            body['attachments'][0]['url'],
+          ),
+        );
+      } else if (response.statusCode == 403) {
+        return Left(InvalidBotToken());
+      } else if (response.statusCode == 404) {
+        return Left(ChannelNotFound());
+      } else {
+        return Left(
+          UnknownError(
+            reason: await response.stream.bytesToString(),
+            stackTrace: StackTrace.current,
+          ),
+        );
+      }
+    } on Object catch (error, stackTrace) {
+      return Left(
+        NetworkError(
+          reason: error.toString(),
+          stackTrace: stackTrace,
+        ),
       );
-    } else {
-      throw response;
     }
   }
 }
