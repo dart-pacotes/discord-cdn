@@ -12,5 +12,8 @@ abstract class DiscordClient {
     required String channelId,
   });
 
-  Uri get apiUrl => Uri.parse('https://discordapp.com/api');
+  ///
+  /// Returns an [Uri] instance that points to the host of Discord API.
+  ///
+  Uri get apiUri => Uri.parse('https://discord.com');
 }
