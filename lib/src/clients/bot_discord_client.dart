@@ -19,15 +19,15 @@ class BotDiscordClient extends DiscordClient {
     required DiscordUploadableImage image,
     required String channelId,
   }) async {
-    final url = apiUrl.resolve('/channels/${channelId}/messages');
+    final endpointUrl = apiUri.resolve('api/channels/${channelId}/messages');
 
-    final request = http.MultipartRequest('POST', url);
+    final request = http.MultipartRequest('POST', endpointUrl);
 
     request.headers['Authorization'] = 'Bot ${token}';
 
     request.files.add(
       http.MultipartFile.fromBytes(
-        'file',
+        'files[0]',
         image.bytes,
         filename: '${image.name}.${image.format}',
       ),
